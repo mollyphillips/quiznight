@@ -5,9 +5,14 @@
 </head>
 <html>
 
-<body>
+<body style="padding: 20px">
    <form action="result" method="POST">
-      <h3>Question {{ number }} </h3>
+      <h3>
+         <table>
+            <td>Question {{ number }} of {{ nQuestions }}</td>
+            <td style="text-align:right">Score so far: {{score}}</td>
+         </table>
+      </h3>
       <pre>{{ question }}</pre>
       <p>Your answer <input type="text" name="answer" /></p>
       <p><input type="submit" value="submit" /></p>

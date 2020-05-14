@@ -6,22 +6,17 @@ import time
 app = Flask(__name__)
 app.secret_key = "any random string"
 
-nQuestions: int = 0
-questions: List[dict] = []
-score: int = 0
-startTime: int
-currentQuestion: dict = {}
-questionNumber:int= 0
-
 @app.route('/')
 def begin_webapp():
+
     session['questions'] = getQuestionsFromCSV("quiz.csv")
     session['nQuestions'] = len(session['questions'])
     session['startTime'] = time.time()
     session['questionNumber'] = 0
     session['currentQuestion'] = session['questions'][session['questionNumber']]
     session['score'] = 0
-    return render_template('quiz.html', question = session['currentQuestion']["question"], number = session['questionNumber'] + 1 )
+    
+    return render_question()
 
 @app.route('/result',methods = ['POST', 'GET'])
 def result():
@@ -32,9 +27,12 @@ def result():
         session['questionNumber'] = session['questionNumber'] + 1
         if session['questionNumber'] < session['nQuestions']:
             session['currentQuestion']  = session['questions'][session['questionNumber']]
-            return render_template('quiz.html', question = session['currentQuestion']["question"], number = session['questionNumber'] + 1 )
+            return render_question()
         else:
             return render_template("result.html",score = session['score'], time = int(time.time()-session['startTime']))
+
+def render_question():
+    return render_template('quiz.html', question = session['currentQuestion']["question"], number = session['questionNumber'] + 1, score = session['score'], nQuestions = session['nQuestions'])
 
 if __name__ == '__main__':
    app.run(debug = True)
