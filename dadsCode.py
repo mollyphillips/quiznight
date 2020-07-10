@@ -13,7 +13,7 @@ def getQuestionsFromCSV(filename: str) -> List[dict]:
                 csvAsList.append(row)
 
     for x in csvAsList:
-        allQuestions.append({"question" : x[1] + "\n" + x[2] + "\n"  + x[3] + "\n" + x[4]+ "\n" + x[5],"answer": x[0]})
+        allQuestions.append({"prompt" : x[1] + "\n" + x[2] + "\n"  + x[3] + "\n" + x[4]+ "\n" + x[5],"answer": x[0]})
     
     random.shuffle(allQuestions)
     
